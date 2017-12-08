@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>新闻内容</title>
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<link href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+	html body{
+		padding: 0px;
+		margin: 0px;
+		max-width: 100% !important;
+	}
+	.main_div{
+		position: relative;
+		width:640px;
+		left:50%;
+		margin-left: -320px;
+		padding: 5%;
+	}
+	.title_div span{
+		font-size: 2.2rem;
+    	font-weight: bold;
+	}
+	.time_div{
+		font-size: 1.4rem;
+	    position: relative;
+	    margin: 10px 0px;
+	    border-bottom: 1px solid #ccc;
+	    color: #ccc;
+	}
+	.content_div{
+		font-size:  1.2em !important;
+	    height: 100%;
+	    overflow: hidden;
+	}
+</style>
+<body>
+	<div class="main_div">
+		<div class="title_div"><span id="sp"></span></div>
+		<div class="time_div"></div>
+		<div class="content_div"></div>
+	</div>
+<script type="text/javascript" src="static/js/common.js"></script>
+<script>
+	var url=window.location.href;
+	var newsId=url.substr(url.lastIndexOf("=")+1);
+	var domainUrl="http://"+newsUtils.domain().SevenSeconds;
+	console.log(newsId);
+	$.ajax({
+		url:domainUrl+"/news/content",
+		data:{"newsId":newsId},
+		type:"post",
+		success:function(result){
+			console.log(result);
+			$("#sp").html(result.extend.news.title);
+			$(".time_div").html(result.extend.news.time);
+			$(".content_div").html(result.extend.news.content);
+		}	
+	});
+</script>
+</body>
+</html>

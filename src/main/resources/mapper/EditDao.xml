@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qimiao.dao.EditDao">
+	<select id="selectPicCount" resultType="java.lang.Integer">
+		SELECT count(*) from img_tb where img_src=#{picUrl}
+	</select>
+	
+	<delete id="deletePic">
+		<!-- update img_tb set img_src='' where img_src=#{picUrl} -->
+		delete from img_tb where img_src=#{picUrl}
+	</delete>
+	
+	<update id="updatePicTotal">
+		UPDATE news_tb set pic_total=(pic_total-1) where news_id=#{newsId}
+	</update>
+	
+	<update id="updateNews" parameterType="com.qimiao.bean.News">
+		update news_tb set title=#{news.title},type=#{news.type},content=#{news.content},
+			time=#{news.time},pic_total=#{news.picTotal},status=#{news.status}
+				where news_id=#{news.newsId};
+	</update>
+	
+	<insert id="updateImgTb" keyProperty="img.imgId" parameterType="com.qimiao.bean.NewsImg">
+		INSERT into img_tb(img_src,news_id,img_num)
+				values(#{img.imgSrc},#{img.newsId},#{img.imgNum});
+	</insert>
+	
+	<delete id="deleteImg">
+		DELETE from img_tb where news_id=#{newsId};
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

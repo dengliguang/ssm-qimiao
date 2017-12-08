@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qimiao.dao.NewsDao">
+	<select id="getCount" resultType="java.lang.Integer">
+		SELECT count(*) from news_tb 
+			where title=#{title}							
+	</select>
+	
+	<insert id="addNews" keyProperty="news.newsId" flushCache="true" parameterType="com.qimiao.bean.News" >
+		INSERT into news_tb(title,type,content,time,pic_total,status)
+				VALUES(#{news.title},#{news.type},#{news.content},#{news.time},#{news.picTotal},#{news.status});
+	</insert>
+	
+	<insert id="addNewsImg" keyProperty="img.imgId" flushCache="true" parameterType="com.qimiao.bean.NewsImg">
+		INSERT into img_tb(img_src,news_id,img_num)
+				values(#{img.imgSrc},#{img.newsId},#{img.imgNum});
+	</insert>
+	
+	<select id="selectNews" resultType="com.qimiao.bean.News">
+		select news_id,title,type,content,time,pic_total,status from news_tb
+				order by news_id desc
+	</select>
+	
+	<select id="selectNewsImg" resultType="com.qimiao.bean.NewsImg">
+		select img_id, img_src, news_id, img_num from img_tb 
+			where news_id=#{newsId}
+	</select>
+	
+	<select id="selectNewsByNewsId" resultType="com.qimiao.bean.News">
+		select news_id,title,type,content,time,pic_total,status from news_tb 
+			where news_id=#{newsId} 
+	</select>
+	
+	<select id="selectNewsByType" resultType="com.qimiao.bean.News">
+		select news_id,title,type,content,time,pic_total,status from news_tb 
+			where type=#{newsType} order by news_id desc
+	</select>
+</mapper>
+
+
+
+
